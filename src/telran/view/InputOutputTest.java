@@ -61,7 +61,7 @@ class InputOutputTest {
 	@Test
 	void readDateFormated() {
 		LocalDate res = io.readDate("Enter date in format d MMM uuuu", "no date ", "d MMM uuuu");
-		io.writeLine(res.toString());
+		io.writeLine(res);
 	}
 
 	@Test
