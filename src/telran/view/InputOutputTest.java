@@ -1,12 +1,12 @@
 package telran.view;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class InputOutputTest {
 	InputOutput io = new ConsoleInputOutput();
@@ -33,43 +33,49 @@ class InputOutputTest {
 
 	@Test
 	@Disabled
-	void readLongTest() {
-		Long res = io.readLong("Enter any number in range [" + Long.MIN_VALUE + ", " + Long.MAX_VALUE + "]",
-				"no number ");
-		io.writeLine(res);
-	}
-
-	@Test
-	@Disabled
 	void readOptionTest() {
-		ArrayList<String> options = new ArrayList<>();
-		options.add("FORWARD");
-		options.add("BACK");
-		options.add("UP");
-		options.add("DOWN");
-		String res = io.readOption("Choose and enter an option: " + options, "wrong option", options);
-		io.writeLine(res);
+		List<String> departments = Arrays.asList("QA", "Management", "Development");
+		String department = io.readOption("Enter department from " + departments, "Wrong department", departments);
+		assertTrue(departments.contains(department));
 	}
-
-	@Test
-	@Disabled
-	void readDateISO() {
-		LocalDate res = io.readDate("Enter date in format YYYY-MM-DD", "no date ");
-		io.writeLine(res);
-	}
-
-	@Test
-	void readDateFormated() {
-		LocalDate res = io.readDate("Enter date in format d MMM uuuu", "no date ", "d MMM uuuu");
-		io.writeLine(res);
-	}
-
 	@Test
 	@Disabled
 	void readPredicateTest() {
-		String res = io.readPredicate("Enter password. min length - 7 characters", "password is too short ",
-				s -> s.length() < 7 ? false : true);
-		io.writeLine(res);
+		String ipAddress = io.readPredicate("Enter IP address", "Wrong IP addres", s -> 
+		s.matches(ipV4Regex()));
+		assertTrue(ipAddress.matches(ipV4Regex()));
 	}
+	
+
+	 String ipOctetRegex() {
+		// string expression of number 0-255 with possible leading zeros
+		// \\d == [0-9]
+		return "\\d\\d?|[0,1]\\d\\d|2[0-4]\\d|25[0-5]";
+	}
+
+	 String ipV4Regex() {
+
+		return String.format("((%1$s)\\.){3}(%1$s)", ipOctetRegex());
+	}
+	 @Test
+	 @Disabled
+	 void readDateISOTest() {
+		 LocalDate dateAs = io.readDate("Enter any date YYYY-MM-DD",
+				 "no date in ISO format");
+		 io.writeLine(dateAs + " has been entered");
+		 
+		 
+	 }
+	 @Test
+	 //@Disabled
+	 void readDateTest() {
+		 String format = "d/M/y";
+		 LocalDate birthdateAS = LocalDate.of(1799, 6, 6);
+		 LocalDate date = io.readDate("Enter birthdate of Pushkin " + format,
+				 "no date in format " + format, format);
+		io.writeLine(String.format("Entered date %s is %s Pushkin's birthdate ",  date, 
+				date.equals(birthdateAS) ? "" : "not" ));
+		 
+	 }
 
 }

@@ -1,11 +1,8 @@
 package telran.view;
-
 import java.io.*;
-
 public class ConsoleInputOutput implements InputOutput {
 	BufferedReader reader;
-
-	public ConsoleInputOutput() {
+	public ConsoleInputOutput()  {
 		reader = new BufferedReader(new InputStreamReader(System.in));
 	}
 
