@@ -38,44 +38,42 @@ class InputOutputTest {
 		String department = io.readOption("Enter department from " + departments, "Wrong department", departments);
 		assertTrue(departments.contains(department));
 	}
+
 	@Test
 	@Disabled
 	void readPredicateTest() {
-		String ipAddress = io.readPredicate("Enter IP address", "Wrong IP addres", s -> 
-		s.matches(ipV4Regex()));
+		String ipAddress = io.readPredicate("Enter IP address", "Wrong IP addres", s -> s.matches(ipV4Regex()));
 		assertTrue(ipAddress.matches(ipV4Regex()));
 	}
-	
 
-	 String ipOctetRegex() {
+	String ipOctetRegex() {
 		// string expression of number 0-255 with possible leading zeros
 		// \\d == [0-9]
 		return "\\d\\d?|[0,1]\\d\\d|2[0-4]\\d|25[0-5]";
 	}
 
-	 String ipV4Regex() {
+	String ipV4Regex() {
 
 		return String.format("((%1$s)\\.){3}(%1$s)", ipOctetRegex());
 	}
-	 @Test
-	 @Disabled
-	 void readDateISOTest() {
-		 LocalDate dateAs = io.readDate("Enter any date YYYY-MM-DD",
-				 "no date in ISO format");
-		 io.writeLine(dateAs + " has been entered");
-		 
-		 
-	 }
-	 @Test
-	 //@Disabled
-	 void readDateTest() {
-		 String format = "d/M/y";
-		 LocalDate birthdateAS = LocalDate.of(1799, 6, 6);
-		 LocalDate date = io.readDate("Enter birthdate of Pushkin " + format,
-				 "no date in format " + format, format);
-		io.writeLine(String.format("Entered date %s is %s Pushkin's birthdate ",  date, 
-				date.equals(birthdateAS) ? "" : "not" ));
-		 
-	 }
+
+	@Test
+	@Disabled
+	void readDateISOTest() {
+		LocalDate dateAs = io.readDate("Enter any date YYYY-MM-DD", "no date in ISO format");
+		io.writeLine(dateAs + " has been entered");
+
+	}
+
+	@Test
+	// @Disabled
+	void readDateTest() {
+		String format = "d/M/y";
+		LocalDate birthdateAS = LocalDate.of(1799, 6, 6);
+		LocalDate date = io.readDate("Enter birthdate of Pushkin " + format, "no date in format " + format, format);
+		io.writeLine(String.format("Entered date %s is %s Pushkin's birthdate ", date,
+				date.equals(birthdateAS) ? "" : "not"));
+
+	}
 
 }
