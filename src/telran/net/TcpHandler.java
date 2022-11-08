@@ -32,8 +32,8 @@ public class TcpHandler implements NetworkHandler {
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
-		
+		output.close();
+		input.close();
 	}
 
 }
