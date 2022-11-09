@@ -32,8 +32,9 @@ public class TcpHandler implements NetworkHandler {
 
 	@Override
 	public void close() throws IOException {
-		output.close();
 		input.close();
+		output.close();
+		socket.close();		
 	}
 
 }
