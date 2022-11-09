@@ -24,6 +24,7 @@ public class TcpClientServer implements Runnable {
 				Request request = (Request) input.readObject();
 				Response response = protocol.getResponse(request);
 				output.writeObject(response);
+				output.reset();
 			}
 		} catch (EOFException e) {
 			System.out.println("client closed connection");
