@@ -4,45 +4,45 @@ import telran.view.InputOutput;
 import telran.view.Item;
 
 public class CalculatorMenu {
-	
-	private static Calculator thisCalculator;
-	
+	private static Calculator calculator;
+
 	public static Item[] getCalculatorItems(Calculator calculator) {
-		thisCalculator = calculator;
-		Item [] items = {
-				Item.of("Add two numbers", CalculatorMenu::add),
-				Item.of("Subtract two numbers", CalculatorMenu::subtract),
-				Item.of("Divide two numbers", CalculatorMenu::divide),
-				Item.of("Multiply two numbers", CalculatorMenu::multiply)
+		CalculatorMenu.calculator = calculator;
+		Item[] res = { Item.of("Add numbers", CalculatorMenu::add),
+				Item.of("Subtract numbers", CalculatorMenu::subtract),
+				Item.of("Multiply numbers", CalculatorMenu::multiply),
+				Item.of("Divide numbers", CalculatorMenu::divide),
+
 		};
-		return items;
-		
-	}
-	
-	static Double[] getTwoNumbers(InputOutput io) {
-		Double  firstNumber = io.readDouble("Enter first number", "no number");
-		Double secondNumber = io.readDouble("Enter second number","no number");
-		return new Double[] {firstNumber, secondNumber};
+		return res;
+
 	}
 
 	static void add(InputOutput io) {
-		Double[] numbers =  getTwoNumbers(io);
-		io.writeLine(thisCalculator.add(numbers[0], numbers[1]));
+		double numbers[] = enterNumbers(io);
+		io.writeLine(calculator.add(numbers[0], numbers[1]));
 	}
 
 	static void subtract(InputOutput io) {
-		Double[] numbers =  getTwoNumbers(io);
-		io.writeLine(thisCalculator.subtract(numbers[0], numbers[1]));
+		double numbers[] = enterNumbers(io);
+		io.writeLine(calculator.subtract(numbers[0], numbers[1]));
 	}
-	
-	static void divide(InputOutput io) {
-		Double[] numbers =  getTwoNumbers(io);
-		io.writeLine(thisCalculator.divide(numbers[0], numbers[1]));
-	}
-	
+
 	static void multiply(InputOutput io) {
-		Double[] numbers =  getTwoNumbers(io);
-		io.writeLine(thisCalculator.multiply(numbers[0], numbers[1]));
+		double numbers[] = enterNumbers(io);
+		io.writeLine(calculator.multiply(numbers[0], numbers[1]));
+	}
+
+	private static double[] enterNumbers(InputOutput io) {
+		double res[] = new double[2];
+		res[0] = io.readDouble("enter first number", "no number");
+		res[1] = io.readDouble("enter second number", "no number");
+		return res;
+	}
+
+	static void divide(InputOutput io) {
+		double numbers[] = enterNumbers(io);
+		io.writeLine(calculator.divide(numbers[0], numbers[1]));
 	}
 
 }

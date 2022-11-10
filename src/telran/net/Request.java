@@ -8,10 +8,10 @@ public class Request implements Serializable {
 	public String requestType;
 	public Serializable requestData;
 	public Request(String requestType, Serializable requestData) {
+		
 		this.requestType = requestType;
 		this.requestData = requestData;
 	}
-	
 	
 
 }

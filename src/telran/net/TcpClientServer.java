@@ -4,33 +4,31 @@ import java.net.*;
 import java.io.*;
 
 public class TcpClientServer implements Runnable {
-	@SuppressWarnings("unused")
 	private Socket socket;
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
-	private ApplProtocol protocol; 
-
+	private ApplProtocol protocol;
 	public TcpClientServer(Socket socket, ApplProtocol protocol) throws Exception {
-		this.socket = socket;
 		this.protocol = protocol;
+		this.socket = socket;
 		input = new ObjectInputStream(socket.getInputStream());
 		output = new ObjectOutputStream(socket.getOutputStream());
 	}
-
 	@Override
 	public void run() {
 		try {
-			while (true) {
+			while(true) {
 				Request request = (Request) input.readObject();
 				Response response = protocol.getResponse(request);
 				output.writeObject(response);
-				output.reset();
 			}
 		} catch (EOFException e) {
 			System.out.println("client closed connection");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			System.out.println("abnormal closing connection " + e.getMessage());
 		}
+
 	}
 
 }

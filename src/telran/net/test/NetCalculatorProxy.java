@@ -3,42 +3,43 @@ package telran.net.test;
 import java.io.Closeable;
 import java.io.IOException;
 
-import telran.net.*;
+import telran.net.NetworkHandler;
 
 public class NetCalculatorProxy implements Calculator, Closeable {
 	private NetworkHandler networkHandler;
+	
 
-	public NetCalculatorProxy(NetworkHandler networkHandler) {
-		this.networkHandler = networkHandler;
+	@Override
+	public void close() throws IOException {
+		networkHandler.close();
 	}
 
 	@Override
 	public double add(double op1, double op2) {
-		return networkHandler.send("add", new Double[] {op1, op2});
+		Double[] data = {op1, op2};
+		return networkHandler.send("add", data);
 	}
 
 	@Override
 	public double subtract(double op1, double op2) {
-		return networkHandler.send("subtract", new Double[] {op1, op2});
+		Double[] data = {op1, op2};
+		return networkHandler.send("subtract", data);
 	}
 
 	@Override
 	public double divide(double op1, double op2) {
-		return networkHandler.send("divide", new Double[] {op1, op2});
+		Double[] data = {op1, op2};
+		return networkHandler.send("divide", data);
 	}
 
 	@Override
 	public double multiply(double op1, double op2) {
-		return networkHandler.send("multiply", new Double[] {op1, op2});
+		Double[] data = {op1, op2};
+		return networkHandler.send("multiply", data);
 	}
 
-	@Override
-	public void close() throws IOException {
-		networkHandler.close();		
+	public NetCalculatorProxy(NetworkHandler networkHandler) {
+		this.networkHandler = networkHandler;
 	}
-	
-	
-	
-	
 
 }
