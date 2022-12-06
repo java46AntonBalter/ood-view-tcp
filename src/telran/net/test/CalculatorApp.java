@@ -1,7 +1,5 @@
 package telran.net.test;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +16,7 @@ public class CalculatorApp {
 		try {
 			Calculator calculator =
 					new NetCalculatorProxy(new TcpHandler("localhost", PORT));
+//			Calculator calculator = new CalculatorImpl();
 			Item[] items = CalculatorMenu.getCalculatorItems(calculator);
 			Item exit = Item.of("Exit", io -> {
 				if (calculator instanceof Closeable) {

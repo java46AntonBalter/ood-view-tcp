@@ -1,10 +1,13 @@
 package telran.net;
 import java.net.*;
-import java.io.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 public class TcpServer implements Runnable {
-   private ServerSocket serverSocket;
+   private static final int N_THREADS = 10;
+private ServerSocket serverSocket;
    private int port;
    private ApplProtocol protocol;
+   public ExecutorService executor = Executors.newFixedThreadPool(N_THREADS);
    public TcpServer(int port, ApplProtocol protocol) throws Exception{
 	   this.port = port;
 	   this.protocol = protocol;
@@ -18,7 +21,7 @@ public class TcpServer implements Runnable {
 			while(true) {
 				Socket socket = serverSocket.accept();
 				TcpClientServer clientServer = new TcpClientServer(socket, protocol);
-				clientServer.run();
+				executor.execute(clientServer);
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
